@@ -2,6 +2,7 @@ var fs = require('fs');
 var mysql      = require('mysql');
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
  var connection = mysql.createConnection({
    host     : 'localhost',
    user     : 'root',
@@ -17,12 +18,15 @@ var app = express();
   app.post('/submit-form', (req, res) => {
     const certificate_no = req.body.certificate_no;
     console.log(certificate_no);
-  })
-  con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
+    connection.connect(function(err) {
+      if (err) throw err;
+      console.log("Connected!");
+    });
+    connection.query("select EXISTS( select `Name` from `MainTable` where `Certificate_number`="+certificate_no+")", function (err, result, fields) {
+      if (err) throw err;
+      console.log(result);
+    });
+
   });
-  con.query("SELECT * FROM MainTable where Certificate_number="+certificate_no, function (err, result, fields) {
-    if (err) throw err;
-    console.log(result);
-  });
+
+  // "select EXISTS( select id from `MainTable` where Certificate_number="+certificate_no+")"
