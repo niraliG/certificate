@@ -96,7 +96,7 @@
         {
             $('#UserForm').submit(function()
             {
-                var formDataVar = new FormData($());
+                var formDataVar = new FormData($(this)[0]);
 
                 console.log(formDataVar);
                 $.ajax({
