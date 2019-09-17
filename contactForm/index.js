@@ -24,7 +24,9 @@ var bodyParser = require('body-parser');
     });
     connection.query("select EXISTS( select `Name` from `MainTable` where `Certificate_number`="+certificate_no+")", function (err, result, fields) {
       if (err) throw err;
-      console.log(result);
+      if(!err){
+      res.send("done");
+      }
     });
 
   });
